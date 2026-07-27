@@ -1,5 +1,6 @@
 package com.example.valora
 
+import androidx.annotation.StringRes
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -7,6 +8,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import kotlin.math.pow
+
+data class Country(
+    val code: String,
+    val flagEmoji: String,
+    @StringRes val nameRes: Int
+)
 
 data class ChartPoint(
     val year: Int,
@@ -19,7 +26,22 @@ class ValoraViewModel : ViewModel() {
 
     private val repository = InflationRepository()
 
-    // 1. ÉTATS DES CHAMPS DE SAISIE
+    // 1. LISTE DES PAYS DISPONIBLES (Zone Euro en premier / par défaut)
+    val availableCountries = listOf(
+        Country(code = "EMU", flagEmoji = "🇪🇺", nameRes = R.string.country_eurozone),
+        Country(code = "FRA", flagEmoji = "🇫🇷", nameRes = R.string.country_france),
+        Country(code = "USA", flagEmoji = "🇺🇸", nameRes = R.string.country_usa),
+        Country(code = "DEU", flagEmoji = "🇩🇪", nameRes = R.string.country_germany),
+        Country(code = "ESP", flagEmoji = "🇪🇸", nameRes = R.string.country_spain),
+        Country(code = "ITA", flagEmoji = "🇮🇹", nameRes = R.string.country_italy),
+        Country(code = "GBR", flagEmoji = "🇬🇧", nameRes = R.string.country_uk),
+        Country(code = "JPN", flagEmoji = "🇯🇵", nameRes = R.string.country_japan)
+    )
+
+    var selectedCountry by mutableStateOf(availableCountries.first())
+        private set
+
+    // 2. ÉTATS DES CHAMPS DE SAISIE
     var initialCapital by mutableStateOf("10000")
         private set
 
@@ -35,46 +57,60 @@ class ValoraViewModel : ViewModel() {
     var years by mutableStateOf("20")
         private set
 
-    // 2. ÉTATS DU CHARGEMENT API
+    // 3. ÉTATS API & ERREURS
     var isLoadingInflation by mutableStateOf(false)
         private set
 
-    var inflationApiError by mutableStateOf<String?>(null)
+    @get:StringRes
+    var inflationApiErrorResId by mutableStateOf<Int?>(null)
         private set
 
-    // 3. HANDLERS DE SAISIE
+    // 4. CHARGEMENT AUTOMATIQUE AU DÉMARRAGE
+    init {
+        syncInflationFromApi()
+    }
+
+    // 5. GESTIONNAIRES DE SAISIE
+    fun onCountrySelected(country: Country) {
+        if (selectedCountry != country) {
+            selectedCountry = country
+            // Déclenche automatiquement la mise à jour du taux d'inflation
+            syncInflationFromApi()
+        }
+    }
+
     fun onInitialCapitalChange(newValue: String) { initialCapital = newValue }
     fun onMonthlyContributionChange(newValue: String) { monthlyContribution = newValue }
     fun onReturnRateChange(newValue: String) { returnRate = newValue }
     fun onInflationRateChange(newValue: String) { inflationRate = newValue }
     fun onYearsChange(newValue: String) { years = newValue }
 
-    // 4. SYNCHRONISATION BANQUE MONDIALE
-    fun syncInflationFromApi(countryCode: String = "FRA") {
+    // 6. SYNCHRONISATION BANQUE MONDIALE
+    fun syncInflationFromApi() {
         viewModelScope.launch {
             isLoadingInflation = true
-            inflationApiError = null
+            inflationApiErrorResId = null
 
-            val fetchedRate = repository.fetchLatestInflation(countryCode)
+            val fetchedRate = repository.fetchLatestInflation(selectedCountry.code)
             if (fetchedRate != null) {
                 val rounded = Math.round(fetchedRate * 10.0) / 10.0
                 inflationRate = rounded.toString()
             } else {
-                inflationApiError = "Erreur de connexion à la Banque Mondiale."
+                inflationApiErrorResId = R.string.error_inflation_fetch
             }
 
             isLoadingInflation = false
         }
     }
 
-    // 5. PARSAGE SÉCURISÉ
+    // 7. PARSAGE SÉCURISÉ DES VALEURS SAISIES
     private val parsedInitialCapital: Double get() = initialCapital.toDoubleOrNull() ?: 0.0
     private val parsedMonthlyContribution: Double get() = monthlyContribution.toDoubleOrNull() ?: 0.0
     private val parsedReturnRate: Double get() = (returnRate.toDoubleOrNull() ?: 0.0) / 100.0
     private val parsedInflationRate: Double get() = (inflationRate.toDoubleOrNull() ?: 0.0) / 100.0
     private val parsedYears: Int get() = years.toIntOrNull() ?: 0
 
-    // 6. CALCULS FINANCIERS
+    // 8. CALCULS FINANCIERS
     val totalInvested: Double
         get() = parsedInitialCapital + (parsedMonthlyContribution * 12 * parsedYears)
 
@@ -104,7 +140,7 @@ class ValoraViewModel : ViewModel() {
             return nominal / (1 + i).pow(n)
         }
 
-    // 7. GÉNÉRATION DES POINTS DU GRAPHIQUE
+    // 9. POINTS POUR LE GRAPHIQUE D'ÉVOLUTION
     val chartPoints: List<ChartPoint>
         get() {
             val p = parsedInitialCapital

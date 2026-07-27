@@ -1,20 +1,40 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Application -->
     <string name="app_name">Valora</string>
-    <string name="title">Valora - Simulateur d\'Épargne</string>
+    <string name="top_bar_title">Valora — Intérêts &amp; Inflation</string>
 
-    <string name="initial_capital">Capital initial (€)</string>
-    <string name="monthly_deposit">Versement mensuel (€)</string>
+    <!-- Carte des résultats -->
+    <string name="results_title">Résultats de la simulation</string>
+    <string name="label_total_invested">Total investi de votre poche :</string>
+    <string name="label_nominal_value">Valeur nominale (brute) :</string>
+    <string name="label_real_value">Pouvoir d\'achat réel (ajusté) :</string>
 
-    <string name="return_rate">Rendement annuel estimé : %.1f%%</string>
-    <string name="inflation_rate">Inflation estimée : %.1f%%</string>
-    <string name="duration">Durée : %d ans</string>
+    <!-- Graphique -->
+    <string name="chart_title">Évolution du capital</string>
+    <string name="chart_legend_nominal">Nominal</string>
+    <string name="chart_legend_real">Pouvoir d\'achat</string>
+    <string name="chart_legend_invested">Versé</string>
 
-    <string name="total_invested">Total versé</string>
-    <string name="nominal_value">Capital futur (Nominal)</string>
-    <string name="real_value">Valeur réelle (Ajustée de l\'inflation)</string>
+    <!-- Formulaire -->
+    <string name="section_parameters">Paramètres du placement</string>
+    <string name="label_country_selector">Pays pour l\'inflation</string>
+    <string name="label_initial_capital">Capital initial (€)</string>
+    <string name="label_monthly_contribution">Versement mensuel (€)</string>
+    <string name="label_return_rate">Rendement annuel estimé (%)</string>
+    <string name="label_inflation_rate">Taux d\'inflation annuel (%)</string>
+    <string name="label_years">Durée du placement (années)</string>
+    <string name="cd_sync_button">Synchroniser avec la Banque Mondiale</string>
 
-    <string name="legend_nominal">Nominal</string>
-    <string name="legend_real">Valeur réelle</string>
-    <string name="legend_invested">Versements</string>
+    <!-- Noms des pays -->
+    <string name="country_france">France</string>
+    <string name="country_eurozone">Zone Euro</string>
+    <string name="country_usa">États-Unis</string>
+    <string name="country_germany">Allemagne</string>
+    <string name="country_spain">Espagne</string>
+    <string name="country_italy">Italie</string>
+    <string name="country_uk">Royaume-Uni</string>
+    <string name="country_japan">Japon</string>
+
+    <!-- Erreurs -->
+    <string name="error_inflation_fetch">Données d\'inflation indisponibles pour ce pays.</string>
 </resources>

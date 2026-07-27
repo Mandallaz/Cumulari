@@ -7,9 +7,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -24,11 +26,12 @@ fun ValoraScreen(
 ) {
     val scrollState = rememberScrollState()
     val currencyFormatter = NumberFormat.getCurrencyInstance(Locale.FRANCE)
+    var countryMenuExpanded by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Valora — Intérêts & Inflation", fontWeight = FontWeight.Bold) },
+                title = { Text(stringResource(R.string.top_bar_title), fontWeight = FontWeight.Bold) },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
@@ -57,7 +60,7 @@ fun ValoraScreen(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Text(
-                        text = "Résultats de la simulation",
+                        text = stringResource(R.string.results_title),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
@@ -65,18 +68,18 @@ fun ValoraScreen(
                     HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
 
                     ResultRow(
-                        label = "Total investi de votre poche :",
+                        label = stringResource(R.string.label_total_invested),
                         value = currencyFormatter.format(viewModel.totalInvested)
                     )
 
                     ResultRow(
-                        label = "Valeur nominale (brute) :",
+                        label = stringResource(R.string.label_nominal_value),
                         value = currencyFormatter.format(viewModel.nominalValue),
                         isBold = true
                     )
 
                     ResultRow(
-                        label = "Pouvoir d'achat réel (ajusté) :",
+                        label = stringResource(R.string.label_real_value),
                         value = currencyFormatter.format(viewModel.realValue),
                         isBold = true,
                         color = MaterialTheme.colorScheme.primary
@@ -93,7 +96,7 @@ fun ValoraScreen(
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
-                        text = "Évolution du capital",
+                        text = stringResource(R.string.chart_title),
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.padding(bottom = 12.dp)
                     )
@@ -102,17 +105,17 @@ fun ValoraScreen(
             }
 
             Text(
-                text = "Paramètres du placement",
+                text = stringResource(R.string.section_parameters),
                 style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(top = 8.dp)
             )
 
-            // 3. CHAMPS DE SAISIE
+            // 3. CAPITAL INITIAL ET VERSEMENT MENSUEL
             OutlinedTextField(
                 value = viewModel.initialCapital,
                 onValueChange = { viewModel.onInitialCapitalChange(it) },
-                label = { Text("Capital initial (€)") },
+                label = { Text(stringResource(R.string.label_initial_capital)) },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
@@ -121,21 +124,59 @@ fun ValoraScreen(
             OutlinedTextField(
                 value = viewModel.monthlyContribution,
                 onValueChange = { viewModel.onMonthlyContributionChange(it) },
-                label = { Text("Versement mensuel (€)") },
+                label = { Text(stringResource(R.string.label_monthly_contribution)) },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
 
+            // 4. RENDEMENT ANNUEL ESTIMÉ (TAUX D'INTÉRÊT)
             OutlinedTextField(
                 value = viewModel.returnRate,
                 onValueChange = { viewModel.onReturnRateChange(it) },
-                label = { Text("Rendement annuel estimé (%)") },
+                label = { Text(stringResource(R.string.label_return_rate)) },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
 
+            // 5. SÉLECTEUR DE PAYS (Placé juste au-dessus du taux d'inflation)
+            ExposedDropdownMenuBox(
+                expanded = countryMenuExpanded,
+                onExpandedChange = { countryMenuExpanded = !countryMenuExpanded },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                val currentCountryName = stringResource(viewModel.selectedCountry.nameRes)
+                OutlinedTextField(
+                    value = "${viewModel.selectedCountry.flagEmoji} $currentCountryName",
+                    onValueChange = {},
+                    readOnly = true,
+                    label = { Text(stringResource(R.string.label_country_selector)) },
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = countryMenuExpanded) },
+                    modifier = Modifier
+                        .menuAnchor()
+                        .fillMaxWidth(),
+                    singleLine = true
+                )
+
+                ExposedDropdownMenu(
+                    expanded = countryMenuExpanded,
+                    onDismissRequest = { countryMenuExpanded = false }
+                ) {
+                    viewModel.availableCountries.forEach { country ->
+                        val countryName = stringResource(country.nameRes)
+                        DropdownMenuItem(
+                            text = { Text("${country.flagEmoji} $countryName") },
+                            onClick = {
+                                viewModel.onCountrySelected(country)
+                                countryMenuExpanded = false
+                            }
+                        )
+                    }
+                }
+            }
+
+            // 6. CHAMP INFLATION + BOUTON SYNC
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
@@ -144,18 +185,20 @@ fun ValoraScreen(
                 OutlinedTextField(
                     value = viewModel.inflationRate,
                     onValueChange = { viewModel.onInflationRateChange(it) },
-                    label = { Text("Taux d'inflation annuel (%)") },
+                    label = { Text(stringResource(R.string.label_inflation_rate)) },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                     modifier = Modifier.weight(1f),
                     singleLine = true,
-                    isError = viewModel.inflationApiError != null,
+                    isError = viewModel.inflationApiErrorResId != null,
                     supportingText = {
-                        viewModel.inflationApiError?.let { Text(it) }
+                        viewModel.inflationApiErrorResId?.let { resId ->
+                            Text(stringResource(resId))
+                        }
                     }
                 )
 
                 IconButton(
-                    onClick = { viewModel.syncInflationFromApi("FRA") },
+                    onClick = { viewModel.syncInflationFromApi() },
                     enabled = !viewModel.isLoadingInflation,
                     modifier = Modifier.padding(top = 8.dp)
                 ) {
@@ -167,16 +210,17 @@ fun ValoraScreen(
                     } else {
                         Icon(
                             imageVector = Icons.Default.Refresh,
-                            contentDescription = "Synchroniser avec la Banque Mondiale"
+                            contentDescription = stringResource(R.string.cd_sync_button)
                         )
                     }
                 }
             }
 
+            // 7. DURÉE DU PLACEMENT
             OutlinedTextField(
                 value = viewModel.years,
                 onValueChange = { viewModel.onYearsChange(it) },
-                label = { Text("Durée du placement (années)") },
+                label = { Text(stringResource(R.string.label_years)) },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
@@ -190,7 +234,7 @@ private fun ResultRow(
     label: String,
     value: String,
     isBold: Boolean = false,
-    color: androidx.compose.ui.graphics.Color = MaterialTheme.colorScheme.onSurface
+    color: Color = MaterialTheme.colorScheme.onSurface
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),

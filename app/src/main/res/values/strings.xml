@@ -1,27 +1,40 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Nom de l'application (affiché sous l'icône du smartphone) -->
-    <string name="app_name" translatable="false">Valora</string>
+    <!-- Application -->
+    <string name="app_name">Valora</string>
+    <string name="top_bar_title">Valora — Interest &amp; Inflation</string>
 
-    <!-- Titre de la barre d'application -->
-    <string name="title">Valora - Savings Simulator</string>
+    <!-- Results Card -->
+    <string name="results_title">Simulation Results</string>
+    <string name="label_total_invested">Total amount invested:</string>
+    <string name="label_nominal_value">Nominal value (gross):</string>
+    <string name="label_real_value">Real purchasing power (adjusted):</string>
 
-    <!-- Libellés des champs de saisie -->
-    <string name="initial_capital">Initial Capital (€)</string>
-    <string name="monthly_deposit">Monthly Deposit (€)</string>
+    <!-- Chart -->
+    <string name="chart_title">Capital Growth</string>
+    <string name="chart_legend_nominal">Nominal</string>
+    <string name="chart_legend_real">Purchasing Power</string>
+    <string name="chart_legend_invested">Invested</string>
 
-    <!-- Formats dynamiques (%% permet d'échapper le symbole pour Android) -->
-    <string name="return_rate">Expected Annual Return: %.1f%%</string>
-    <string name="inflation_rate">Estimated Inflation: %.1f%%</string>
-    <string name="duration">Duration: %d years</string>
+    <!-- Form -->
+    <string name="section_parameters">Investment Parameters</string>
+    <string name="label_country_selector">Country for inflation rate</string>
+    <string name="label_initial_capital">Initial capital (€)</string>
+    <string name="label_monthly_contribution">Monthly contribution (€)</string>
+    <string name="label_return_rate">Estimated annual return (%)</string>
+    <string name="label_inflation_rate">Annual inflation rate (%)</string>
+    <string name="label_years">Investment duration (years)</string>
+    <string name="cd_sync_button">Sync with World Bank</string>
 
-    <!-- Libellés des résultats -->
-    <string name="total_invested">Total Deposited</string>
-    <string name="nominal_value">Future Capital (Nominal)</string>
-    <string name="real_value">Real Value (Inflation-adjusted)</string>
+    <!-- Country Names -->
+    <string name="country_france">France</string>
+    <string name="country_eurozone">Eurozone</string>
+    <string name="country_usa">United States</string>
+    <string name="country_germany">Germany</string>
+    <string name="country_spain">Spain</string>
+    <string name="country_italy">Italy</string>
+    <string name="country_uk">United Kingdom</string>
+    <string name="country_japan">Japan</string>
 
-    <!-- Légende du graphique -->
-    <string name="legend_nominal">Nominal</string>
-    <string name="legend_real">Real Value</string>
-    <string name="legend_invested">Deposited</string>
+    <!-- Errors -->
+    <string name="error_inflation_fetch">Inflation data unavailable for this country.</string>
 </resources>
