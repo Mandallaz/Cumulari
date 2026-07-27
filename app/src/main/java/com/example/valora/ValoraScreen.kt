@@ -157,7 +157,7 @@ fun ValoraScreen(
                     label = { Text(stringResource(R.string.label_country_selector)) },
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = countryMenuExpanded) },
                     modifier = Modifier
-                        .menuAnchor(MenuAnchorType.PrimaryNotEditable, enabled = true)
+                        .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable, enabled = true)
                         .fillMaxWidth(),
                     singleLine = true
                 )
