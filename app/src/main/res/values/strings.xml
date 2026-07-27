@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Nom de l'application (affiché sous l'icône du smartphone) -->
+    <string name="app_name" translatable="false">Valora</string>
+
+    <!-- Titre de la barre d'application -->
+    <string name="title">Valora - Savings Simulator</string>
+
+    <!-- Libellés des champs de saisie -->
+    <string name="initial_capital">Initial Capital (€)</string>
+    <string name="monthly_deposit">Monthly Deposit (€)</string>
+
+    <!-- Formats dynamiques (%% permet d'échapper le symbole pour Android) -->
+    <string name="return_rate">Expected Annual Return: %.1f%%</string>
+    <string name="inflation_rate">Estimated Inflation: %.1f%%</string>
+    <string name="duration">Duration: %d years</string>
+
+    <!-- Libellés des résultats -->
+    <string name="total_invested">Total Deposited</string>
+    <string name="nominal_value">Future Capital (Nominal)</string>
+    <string name="real_value">Real Value (Inflation-adjusted)</string>
+
+    <!-- Légende du graphique -->
+    <string name="legend_nominal">Nominal</string>
+    <string name="legend_real">Real Value</string>
+    <string name="legend_invested">Deposited</string>
+</resources>
