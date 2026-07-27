@@ -55,4 +55,9 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     // Dépendance nécessaire pour viewModel() dans Jetpack Compose
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.0")
+    // Retrofit pour les requêtes HTTP
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    // Bibliothèque d'icônes Material Compose
+    implementation("androidx.compose.material:material-icons-extended")
 }
