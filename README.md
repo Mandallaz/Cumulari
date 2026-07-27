@@ -9,6 +9,15 @@
 - **Interactive Chart:** Custom visual chart built with **Canvas Compose** showing Nominal Value, Real Value, and Total Invested.
 - **Localized:** Full support for English and French.
 
+## 🌍 External APIs & Data Sources
+
+This application integrates the **World Bank Open Data REST API** to automatically retrieve up-to-date inflation rates per country:
+
+* **API Endpoint:** `http://api.worldbank.org/v2/country/{country_code}/indicator/FP.CPI.TOTL.ZG?format=json`
+* **Features:**
+   * Dynamic fetch of the most recent annual inflation rate based on selected country (defaults to Euro Area / `EMU`).
+   * Automatic fallback values if offline or if data is unavailable.
+
 ## 🛠️ Tech Stack
 
 - **Language:** [Kotlin](https://kotlinlang.org/)
