@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Valora</string>
+    <string name="title">Valora - Simulateur d\'Épargne</string>
+
+    <string name="initial_capital">Capital initial (€)</string>
+    <string name="monthly_deposit">Versement mensuel (€)</string>
+
+    <string name="return_rate">Rendement annuel estimé : %.1f%%</string>
+    <string name="inflation_rate">Inflation estimée : %.1f%%</string>
+    <string name="duration">Durée : %d ans</string>
+
+    <string name="total_invested">Total versé</string>
+    <string name="nominal_value">Capital futur (Nominal)</string>
+    <string name="real_value">Valeur réelle (Ajustée de l\'inflation)</string>
+
+    <string name="legend_nominal">Nominal</string>
+    <string name="legend_real">Valeur réelle</string>
+    <string name="legend_invested">Versements</string>
+</resources>
