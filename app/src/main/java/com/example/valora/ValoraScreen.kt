@@ -17,7 +17,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import java.text.NumberFormat
-import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -25,7 +24,11 @@ fun ValoraScreen(
     viewModel: ValoraViewModel = viewModel()
 ) {
     val scrollState = rememberScrollState()
-    val currencyFormatter = NumberFormat.getCurrencyInstance(Locale.FRANCE)
+    // Le formateur suit la devise du pays sélectionné (ex: USD pour les USA, JPY pour le Japon)
+    // au lieu d'afficher systématiquement des euros.
+    val currencyFormatter = remember(viewModel.selectedCountry) {
+        NumberFormat.getCurrencyInstance(viewModel.selectedCountry.currencyLocale)
+    }
     var countryMenuExpanded by remember { mutableStateOf(false) }
 
     Scaffold(
@@ -154,7 +157,7 @@ fun ValoraScreen(
                     label = { Text(stringResource(R.string.label_country_selector)) },
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = countryMenuExpanded) },
                     modifier = Modifier
-                        .menuAnchor()
+                        .menuAnchor(MenuAnchorType.PrimaryNotEditable, enabled = true)
                         .fillMaxWidth(),
                     singleLine = true
                 )

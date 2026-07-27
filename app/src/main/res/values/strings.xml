@@ -37,4 +37,8 @@
 
     <!-- Errors -->
     <string name="error_inflation_fetch">Inflation data unavailable for this country.</string>
+    <string name="error_no_internet">No internet connection. Check your network.</string>
+    <string name="error_timeout">The server is taking too long to respond. Try again.</string>
+    <string name="error_server">The service is temporarily unavailable.</string>
+    <string name="error_parsing">No inflation data available for this country.</string>
 </resources>
