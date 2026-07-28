@@ -3,6 +3,7 @@ package com.mandallaz.cumulari
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import kotlin.math.pow
 
 class SimulationModelTest {
 
@@ -51,7 +52,7 @@ class SimulationModelTest {
             years = 1
         )
 
-        val expectedNominal = 1000.0 * Math.pow(1 + 0.12 / 12.0, 12.0)
+        val expectedNominal = 1000.0 * (1 + 0.12 / 12.0).pow(12.0)
 
         assertEquals(1000.0, result.totalInvested, delta)
         assertEquals(expectedNominal, result.nominalValue, delta)
@@ -85,7 +86,7 @@ class SimulationModelTest {
 
         assertEquals(1000.0, result.totalInvested, delta)
         assertEquals(1000.0, result.nominalValue, delta)
-        assertEquals(1000.0 / Math.pow(1.10, 2.0), result.realValue, delta)
+        assertEquals(1000.0 / 1.10.pow(2.0), result.realValue, delta)
 
         val yearOne = result.history.first { it.year == 1 }
         assertEquals(1000.0 / 1.10, yearOne.realValue, delta)
