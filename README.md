@@ -1,6 +1,6 @@
-# Valora 📈
+# Cumulari 📈
 
-**Valora** is a native Android application designed to simulate long-term savings growth while accounting for the impact of inflation on purchasing power.
+**Cumulari** is a native Android application designed to simulate long-term savings growth while accounting for the impact of inflation on purchasing power.
 
 ## ✨ Features
 
@@ -35,6 +35,6 @@ This application integrates the **World Bank Open Data REST API** to automatical
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Mandallaz/Valora.git
-   cd Valora
+   git clone https://github.com/Mandallaz/Cumulari.git
+   cd Cumulari
    ```⏎     

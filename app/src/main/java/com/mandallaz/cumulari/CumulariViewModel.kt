@@ -1,4 +1,4 @@
-package com.example.valora
+package com.mandallaz.cumulari
 
 import androidx.annotation.StringRes
 import androidx.compose.runtime.getValue
@@ -25,7 +25,7 @@ data class ChartPoint(
     val real: Double
 )
 
-class ValoraViewModel(
+class CumulariViewModel(
     private val repository: InflationRepository = InflationRepository()
 ) : ViewModel() {
 

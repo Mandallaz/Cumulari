@@ -1,4 +1,4 @@
-package com.example.valora
+package com.mandallaz.cumulari
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -12,13 +12,13 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            // ValoraTheme s'adapte automatiquement au mode clair/sombre du téléphone
-            ValoraTheme {
+            // CumulariTheme s'adapte automatiquement au mode clair/sombre du téléphone
+            CumulariTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ValoraScreen()
+                    CumulariScreen()
                 }
             }
         }

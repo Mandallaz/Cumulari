@@ -1,7 +1,7 @@
 <resources>
     <!-- Application -->
-    <string name="app_name">Valora</string>
-    <string name="top_bar_title">Valora — Intérêts &amp; Inflation</string>
+    <string name="app_name">Cumulari</string>
+    <string name="top_bar_title">Cumulari — Intérêts &amp; Inflation</string>
 
     <!-- Carte des résultats -->
     <string name="results_title">Résultats de la simulation</string>

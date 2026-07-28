@@ -1,4 +1,4 @@
-package com.example.valora
+package com.mandallaz.cumulari
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -22,7 +22,7 @@ private val DarkColors = darkColorScheme(
 )
 
 @Composable
-fun ValoraTheme(
+fun CumulariTheme(
     // Suit automatiquement le réglage clair/sombre du téléphone
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Material You (couleurs extraites du fond d'écran) sur Android 12+
