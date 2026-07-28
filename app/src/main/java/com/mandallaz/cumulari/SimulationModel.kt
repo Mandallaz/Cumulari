@@ -1,4 +1,4 @@
-package com.example.valora
+package com.mandallaz.cumulari
 
 import kotlin.math.pow
 

@@ -22,5 +22,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Valora – Savings & Inflation"
+rootProject.name = "Cumulari – Savings & Inflation"
 include(":app")

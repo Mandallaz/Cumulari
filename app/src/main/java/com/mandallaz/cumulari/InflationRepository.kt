@@ -1,4 +1,4 @@
-package com.example.valora
+package com.mandallaz.cumulari
 
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException

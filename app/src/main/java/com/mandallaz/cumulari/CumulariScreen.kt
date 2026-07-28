@@ -1,4 +1,4 @@
-package com.example.valora
+package com.mandallaz.cumulari
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -20,8 +20,8 @@ import java.text.NumberFormat
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ValoraScreen(
-    viewModel: ValoraViewModel = viewModel()
+fun CumulariScreen(
+    viewModel: CumulariViewModel = viewModel()
 ) {
     val scrollState = rememberScrollState()
     // Le formateur suit la devise du pays sélectionné (ex: USD pour les USA, JPY pour le Japon)
@@ -103,7 +103,7 @@ fun ValoraScreen(
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.padding(bottom = 12.dp)
                     )
-                    ValoraChart(points = viewModel.chartPoints)
+                    CumulariChart(points = viewModel.chartPoints)
                 }
             }
 
