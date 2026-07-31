@@ -37,4 +37,8 @@ This application integrates the **World Bank Open Data REST API** to automatical
    ```bash
    git clone https://github.com/Mandallaz/Cumulari.git
    cd Cumulari
-   ```⏎     
+   ```
+
+## 📄 License
+
+This project is licensed under the [GNU General Public License v3.0](LICENSE) — you're free to use, study, modify, and redistribute this code, provided that any derivative work is also released under GPLv3 and its source made available.⏎     
