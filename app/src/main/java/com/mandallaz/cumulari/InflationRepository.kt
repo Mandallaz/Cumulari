@@ -1,5 +1,6 @@
 package com.mandallaz.cumulari
 
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import retrofit2.HttpException
@@ -61,7 +62,7 @@ class InflationRepository {
             // Autre coupure réseau (ex: connexion perdue en cours de requête)
             InflationFetchResult.Failure.NoInternet
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.w("InflationRepository", "Unexpected error fetching inflation data", e)
             InflationFetchResult.Failure.Unknown(e.message)
         }
     }
